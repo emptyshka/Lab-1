@@ -3,53 +3,47 @@ BLUE = '\u001b[44m'
 WHITE = '\u001b[47m'
 END = '\u001b[0m'
 
-'''for i in range(6):
-    if i < 3:
-        print(f'{BLUE}{"  " * (2 * i + 2)}{WHITE}{"  " * (14 - 2 * i)}{END}')
+for i in range(11):
+    if i == 5:
+        print(f'{WHITE}{"  " * (7)}{RED}{"  " * (7)}{WHITE}{"  " * (7)}{END}')
+    elif i == 4 or i == 6:
+        print(f'{WHITE}{"  " * (8)}{RED}{"  " * (5)}{WHITE}{"  " * (8)}{END}')
+    elif i == 3 or i == 7:
+        print(f'{WHITE}{"  " * (9)}{RED}{"  " * (3)}{WHITE}{"  " * (9)}{END}')
     else:
-        print(f'{BLUE}{"  " * (12 - 2 * i)}{RED}{"  " * (4 + 2 * i)}{END}')'''
-
-
-plot_list = [[0 for i in range(10)] for i in range(10)]
-result = [0 for i in range(10)]
+        print(f'{WHITE}{"  " * (21)}{END}')
 
 for i in range(10):
-    result[i] = i ** 3
+    if i == 2 or i == 8:
+        print(f'{WHITE}{"  " * (5)}{BLUE}{"  " * (1)}{WHITE}{"  " * (5)}{BLUE}{"  " * (1)}{WHITE}{"  " * (5)}{END}')
+    elif i == 3 or i == 7:
+        print(f'{WHITE}{"  " * (4)}{BLUE}{"  " * (1)}{WHITE}{"  " * (1)}{BLUE}{"  " * (1)}{WHITE}{"  " * (3)}{BLUE}{"  " * (1)}{WHITE}{"  " * (1)}{BLUE}{"  " * (1)}{WHITE}{"  " * (4)}{END}')
+    elif i == 4 or i == 6:
+        print(f'{WHITE}{"  " * (3)}{BLUE}{"  " * (1)}{WHITE}{"  " * (3)}{BLUE}{"  " * (1)}{WHITE}{"  " * (1)}{BLUE}{"  " * (1)}{WHITE}{"  " * (3)}{BLUE}{"  " * (1)}{WHITE}{"  " * (3)}{END}')
+    elif i == 5:
+        print(f'{WHITE}{"  " * (2)}{BLUE}{"  " * (1)}{WHITE}{"  " * (5)}{BLUE}{"  " * (1)}{WHITE}{"  " * (5)}{BLUE}{"  " * (1)}{WHITE}{"  " * (2)}{END}')
+    else:
+        print(f'{WHITE}{"  " * (17)}{END}')
 
-step = round(abs(result[0] - result[9]) / 9, 2)
-print(step)
 
-for i in range(10):
-    for j in range(10):
-        if j == 0:
-            plot_list[i][j] = step * (8-i) + step
+import math
 
-for i in range(9):
-    for j in range(10):
-        if abs(plot_list[i][0] - result[9 - j]) < step:
-            for k in range(9):
-                if 8 - k == j:
-                    plot_list[i][k+1] = 1
+def y(x):
+    return -3 * x
 
-for i in range(9):
-    line = ''
-    for j in range(10):
-        if j == 0:
-            line += '\t' + str(int(plot_list[i][j])) + '\t'
-        if plot_list[i][j] == 0:
-            line += '--'
-        if plot_list[i][j] == 1:
-            line += '!!'
-    print(line)
-print('\t0\t1 2 3 4 5 6 7 8 9')
+x_min = -10
+x_max = 10
+step = 0.1
 
-for i in range(10):
-    #print(plot_list[i])
-    pass
+for x in range(int(x_min * 10), int(x_max * 10), int(step * 10)):
+    x_val = x / 10
+    y_val = int(y(x_val))
+    print("\033[94m" + "\033[4m" + " " * (y_val + 10) + "*" + "\033[0m")
 
-file = open('sequence.txt', 'r')
-list = []
-for number in file:
-    list.append(float(number))
-file.close()
-print(list)
+f = open('sequence.txt')
+d = [float(x[1:-1]) if x[0] != "-" else -1 * float(x[1:-1]) for x in f]
+count = 0
+for i in range(0, len(d)):
+    if d[i] != -5.0 and d[i]<0:
+        count += 1
+print((count/len(d)) * 100)
